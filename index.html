@@ -138,6 +138,51 @@
   .card p{font-size:14.5px;}
   .card .tag-row{display:flex; gap:8px; flex-wrap:wrap; margin-top:14px;}
 
+  .mini-project-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+  .mini-card{background:var(--bg-elevated); border:1px solid var(--border); border-radius:10px; padding:18px;}
+  .mini-card h4{font-family:var(--font-mono); font-size:14px; margin-bottom:6px; color:var(--ink);}
+  .mini-card p{font-size:12.5px; margin-bottom:10px;}
+  .mini-card .tag-row{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;}
+  .mini-card a{font-family:var(--font-mono); font-size:11.5px; text-decoration:none;}
+  .mini-card a:hover{color:var(--accent-2);}
+
+  /* Explorador de código de patrones */
+  .code-explorer{
+    display:grid; grid-template-columns:250px 1fr;
+    background:var(--bg-elevated); border:1px solid var(--border); border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .tree-panel{
+    background:var(--bg-elevated-2); border-right:1px solid var(--border);
+    padding:12px 0; overflow-y:auto; max-height:560px;
+    font-family:var(--font-mono); font-size:12.5px;
+  }
+  .tree-folder, .tree-file{
+    padding:5px 14px; cursor:pointer; color:var(--ink-dim); white-space:nowrap; user-select:none;
+  }
+  .tree-folder:hover, .tree-file:hover{background:rgba(255,255,255,0.05);}
+  .tree-file.active{background:rgba(242,166,61,0.14); color:var(--accent);}
+  .tree-caret{display:inline-block; width:12px; font-size:9px; color:var(--muted);}
+  .code-panel{display:flex; flex-direction:column; min-width:0;}
+  .code-breadcrumb{
+    padding:12px 18px; border-bottom:1px solid var(--border); font-family:var(--font-mono);
+    font-size:12px; color:var(--muted); display:flex; justify-content:space-between; align-items:center; gap:10px;
+  }
+  .code-copy-btn{
+    font-family:var(--font-mono); font-size:11px; background:none; border:1px solid var(--border);
+    color:var(--ink-dim); padding:4px 10px; border-radius:6px; cursor:pointer; flex-shrink:0;
+  }
+  .code-copy-btn:hover{border-color:var(--accent-2); color:var(--accent-2);}
+  .code-content{
+    padding:18px; overflow:auto; flex:1; margin:0; font-family:var(--font-mono);
+    font-size:12px; line-height:1.65; max-height:560px; color:var(--ink-dim);
+  }
+  .tok-k{color:var(--accent-2);}
+  .tok-t{color:var(--info);}
+  .tok-s{color:#A8C97F;}
+  .tok-c{color:var(--muted); font-style:italic;}
+  .tok-a{color:var(--accent);}
+
   .lab-intro{max-width:66ch;}
   .lab-tabs{display:flex; gap:8px; margin:28px 0 24px; flex-wrap:wrap;}
   .lab-tab{
@@ -177,24 +222,7 @@
   }
   .console-error{color:var(--danger); font-size:13.5px;}
 
-  .pattern-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
-  .pattern-card{background:var(--bg-elevated); border:1px solid var(--border); border-radius:var(--radius); padding:22px;}
-  .pattern-card h3{font-size:16px; margin-bottom:12px;}
-  .pattern-card p{font-size:13.5px; margin:12px 0;}
-  .pattern-card pre{
-    background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:12px;
-    font-family:var(--font-mono); font-size:11px; overflow-x:auto; margin:0; color:var(--ink-dim);
-  }
-  .flow-row{display:flex; align-items:center; gap:6px; flex-wrap:wrap;}
-  .flow-box{
-    background:var(--bg); border:1px solid var(--border); border-radius:7px;
-    padding:7px 10px; font-family:var(--font-mono); font-size:10.5px; color:var(--ink-dim); white-space:nowrap;
-  }
-  .flow-box.active{border-color:var(--accent); color:var(--accent); background:rgba(242,166,61,0.1);}
-  .flow-box.dim{opacity:0.55;}
-  .flow-arrow{color:var(--muted); font-size:13px;}
-  .flow-stack{display:flex; flex-direction:column; gap:4px;}
-  .patterns-note{max-width:64ch; margin-bottom:26px; color:var(--muted); font-size:14px;}
+  .patterns-note{max-width:68ch; margin-bottom:26px; color:var(--muted); font-size:14px;}
 
   .arch-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
   .arch-card{background:var(--bg-elevated); border:1px solid var(--border); border-radius:var(--radius); padding:22px; text-align:center;}
@@ -235,11 +263,14 @@
 
   @media (max-width:860px){
     .hero-grid{grid-template-columns:1fr;}
-    .project-grid, .pattern-grid{grid-template-columns:1fr;}
+    .project-grid{grid-template-columns:1fr;}
+    .mini-project-grid{grid-template-columns:1fr 1fr;}
     .arch-grid{grid-template-columns:1fr;}
     .jwt-panel{grid-template-columns:1fr;}
     section{padding:64px 18px;}
     .status-right .status-clock{display:none;}
+    .code-explorer{grid-template-columns:1fr;}
+    .tree-panel{max-height:220px; border-right:none; border-bottom:1px solid var(--border);}
   }
   @media (prefers-reduced-motion: reduce){
     .logo .blink{animation:none;}
@@ -304,8 +335,8 @@
     <div class="timeline">
       <div class="timeline-item">
         <div class="timeline-date">Sep 2025 — Abr 2026</div>
-        <div class="timeline-role">Junior Software Developer</div>
-        <div class="timeline-org">DELÓGICA (Santander USA) · Madrid</div>
+        <div class="timeline-role">Junior Java Developer</div>
+        <div class="timeline-org">DELÓGICA · Madrid</div>
         <p class="timeline-desc">Migración de APIs para Banco Santander USA, de MuleSoft a Java nativo. Ciclo de vida completo de cada pieza: análisis del flujo original, desarrollo, despliegue en OpenShift y validación en entorno CERT. Coordinación continua con el equipo de Gobierno del banco, siguiendo lineamientos de arquitectura, seguridad y documentación.</p>
         <div class="timeline-tags">
           <span class="tag">Java</span><span class="tag">MuleSoft</span><span class="tag">OpenShift</span><span class="tag">OpenAPI</span>
@@ -320,14 +351,13 @@
         <p class="timeline-desc">Patrones de diseño, algoritmia y Clean Code bajo metodología SCRUM. Persistencia con JPA y pruebas unitarias sobre Spring Framework / Spring Boot. Entre los desarrollos, una aplicación de gestión de parking (control de plazas, entradas/salidas, tickets e historial de uso). Impartí clases de programación a alumnos de 1º de DAM.</p>
         <div class="timeline-tags">
           <span class="tag">Spring Boot</span><span class="tag">JPA</span><span class="tag">SCRUM</span><span class="tag">Postman</span>
-          <span class="tag">Design Patterns</span><span class="tag">Clean Code</span><span class="tag">SOLID</span><span class="tag">Algorithms</span>
         </div>
       </div>
       <div class="timeline-item">
         <div class="timeline-date">2024</div>
         <div class="timeline-role">Profesor particular de Java</div>
         <div class="timeline-org">Clases particulares</div>
-        <p class="timeline-desc">En mi segundo curso de estudio, estuve ofreciendo clases particulares de Java a los alumnos de primero.</p>
+        <p class="timeline-desc">Clases individuales de programación en Java, desde fundamentos hasta POO aplicada.</p>
       </div>
       <div class="timeline-item">
         <div class="timeline-date">2023 — 2025</div>
@@ -336,7 +366,6 @@
         <p class="timeline-desc">Ciclo Formativo de Grado Superior centrado en programación multiplataforma: bases de datos, desarrollo de interfaces, acceso a datos, programación de servicios y procesos, y desarrollo de aplicaciones web y móviles.</p>
         <div class="timeline-tags">
           <span class="tag">Java</span><span class="tag">Bases de datos</span><span class="tag">Desarrollo web</span><span class="tag">Multiplataforma</span>
-          <span class="tag">Sistemas Informáticos</span><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
         </div>
       </div>
     </div>
@@ -384,7 +413,7 @@
       <div class="field-row">
         <div class="field" style="flex:2;">
           <label for="backend-url">URL del backend</label>
-          <input type="text" id="backend-url" value="https://api.primeofstudio.com" spellcheck="false">
+          <input type="text" id="backend-url" value="http://localhost:8080" spellcheck="false">
         </div>
         <div>
           <button class="btn btn-primary" id="btn-token" onclick="getToken()">Obtener token</button>
@@ -443,7 +472,7 @@
   <section id="patrones">
     <span class="eyebrow">Patrones y arquitecturas</span>
     <h2 style="font-size:26px; margin-bottom:10px;">Lo que controlo, explicado</h2>
-    <p class="patterns-note">Esta sección es intencionadamente estática: no llama a ningún backend. El objetivo no es la interactividad, es que en diez segundos veas que entiendo cada patrón y cada arquitectura — con su diagrama, su explicación y su código real.</p>
+    <p class="patterns-note">Esta sección es intencionadamente estática: no llama a ningún backend. Es un explorador de carpetas con el código real y completo de <code>patterns/</code> (Java puro, sin Spring) y de las piezas del <code>Delegate</code> que sí están en marcha en el laboratorio de arriba — el mismo código, no un resumen escrito a mano.</p>
 
     <div class="lab-tabs">
       <button class="lab-tab active" data-tab="pat-patrones">Patrones de diseño</button>
@@ -451,141 +480,15 @@
     </div>
 
     <div class="lab-panel" id="panel-pat-patrones">
-      <div class="pattern-grid">
-
-        <div class="pattern-card">
-          <h3>Factory</h3>
-          <div class="flow-row">
-            <div class="flow-box">Cliente</div><span class="flow-arrow">→</span>
-            <div class="flow-box active">Factory</div><span class="flow-arrow">⇢</span>
-            <div class="flow-stack"><div class="flow-box dim">Producto A</div><div class="flow-box dim">Producto B</div></div>
+      <div class="code-explorer">
+        <div class="tree-panel" id="tree-panel"></div>
+        <div class="code-panel">
+          <div class="code-breadcrumb">
+            <span id="code-path">patterns</span>
+            <button class="code-copy-btn" id="btn-copy" onclick="copyCode()">Copiar</button>
           </div>
-          <p>El cliente pide un tipo de producto por nombre; nunca importa las clases concretas.</p>
-          <pre>public class NotificationFactory {
-  public static Notification create(String type) {
-    return switch (type.toUpperCase()) {
-      case "EMAIL" -> new EmailNotification();
-      case "SMS" -> new SmsNotification();
-    };
-  }
-}</pre>
+          <pre class="code-content"><code id="code-content"></code></pre>
         </div>
-
-        <div class="pattern-card">
-          <h3>Singleton</h3>
-          <div class="flow-row">
-            <div class="flow-stack"><div class="flow-box dim">Llamada 1</div><div class="flow-box dim">Llamada 2</div><div class="flow-box dim">Llamada 3</div></div>
-            <span class="flow-arrow">⇢</span>
-            <div class="flow-box active">Instancia única</div>
-          </div>
-          <p>Constructor privado + instancia estática: todas las llamadas devuelven el mismo objeto.</p>
-          <pre>private static final AppConfigSingleton INSTANCE
-    = new AppConfigSingleton();
-
-public static AppConfigSingleton getInstance() {
-  return INSTANCE;
-}</pre>
-        </div>
-
-        <div class="pattern-card">
-          <h3>Observer</h3>
-          <div class="flow-row">
-            <div class="flow-box active">Sujeto</div><span class="flow-arrow">⇢</span>
-            <div class="flow-stack"><div class="flow-box dim">Observer A</div><div class="flow-box dim">Observer B</div></div>
-          </div>
-          <p>El sujeto avisa a todos sus observadores de un cambio, sin conocer su lógica interna.</p>
-          <pre>public List&lt;String&gt; updatePrice(double newPrice) {
-  this.price = newPrice;
-  for (PriceObserver o : observers) {
-    o.onPriceChanged(newPrice);
-    triggered.add(o.name());
-  }
-  return triggered;
-}</pre>
-        </div>
-
-        <div class="pattern-card">
-          <h3>Strategy</h3>
-          <div class="flow-row">
-            <div class="flow-box">Contexto</div><span class="flow-arrow">→</span>
-            <div class="flow-box dim">Estrategia A</div>
-            <div class="flow-box active">Estrategia B</div>
-            <div class="flow-box dim">Estrategia C</div>
-          </div>
-          <p>El algoritmo se elige en tiempo de ejecución, intercambiable sin tocar el contexto.</p>
-          <pre>public sealed interface DiscountStrategy
-    permits NoDiscountStrategy,
-            PercentageDiscountStrategy,
-            FixedDiscountStrategy {
-  double apply(double amount);
-}</pre>
-        </div>
-
-        <div class="pattern-card">
-          <h3>Command</h3>
-          <div class="flow-row">
-            <div class="flow-box">Invocador</div><span class="flow-arrow">→</span>
-            <div class="flow-box active">Comando</div><span class="flow-arrow">→</span>
-            <div class="flow-box">Receptor</div>
-          </div>
-          <p>Cada acción se encapsula como un objeto ejecutable, con su propio historial auditable.</p>
-          <pre>public String run(Command command) {
-  String result = command.execute();
-  history.add(new HistoryEntry(
-      command.description(), result, now()));
-  return result;
-}</pre>
-        </div>
-
-        <div class="pattern-card">
-          <h3>State</h3>
-          <div class="flow-row">
-            <span class="flow-arrow">↻</span>
-            <div class="flow-box active">Rojo</div><span class="flow-arrow">→</span>
-            <div class="flow-box">Verde</div><span class="flow-arrow">→</span>
-            <div class="flow-box">Amarillo</div>
-          </div>
-          <p>Cada estado decide cuál es el siguiente. Sin enjambres de if/else.</p>
-          <pre>public sealed interface TrafficLightState
-    permits RedState, YellowState, GreenState {
-  TrafficLightState next();
-  String label();
-}</pre>
-        </div>
-
-        <div class="pattern-card">
-          <h3>Builder</h3>
-          <div class="flow-row">
-            <div class="flow-box">Builder</div><span class="flow-arrow">→</span>
-            <div class="flow-box dim">título</div><span class="flow-arrow">→</span>
-            <div class="flow-box dim">cuerpo</div><span class="flow-arrow">⇢</span>
-            <div class="flow-box active">Producto</div>
-          </div>
-          <p>Construcción de un objeto complejo paso a paso, explícita y legible, sin un constructor de seis parámetros.</p>
-          <!-- CÓDIGO INTERACTIVO PARA EL PATRÓN BUILDER -->
-          <iframe 
-            src="https://stackblitz.com/github/JaviiC/portfolio-backend/tree/master/src/main/java/com/javiercerro/portfolio/patterns/builder?embed=1&view=editor&ctl=1&file=ReportBuilder.java"
-            style="width: 100%; height: 400px; border: 1px solid #333; border-radius: 8px; margin-top: 15px;"
-            title="Patrón Builder interactivo"
-            loading="lazy">
-          </iframe>
-        </div>
-
-        <div class="pattern-card">
-          <h3>Delegate</h3>
-          <div class="flow-row">
-            <div class="flow-box active">Api (contrato)</div><span class="flow-arrow">⇢</span>
-            <div class="flow-box">Delegate (lógica real)</div>
-          </div>
-          <p>El contrato OpenAPI queda desacoplado de la lógica de negocio real. Este es literalmente el que usa el laboratorio bancario de arriba.</p>
-          <pre>public class BankingController implements BankingApi {
-  private final BankingApiDelegate delegate;
-  public ResponseEntity&lt;AccountResponse&gt; openAccount(...) {
-    return delegate.openAccount(request);
-  }
-}</pre>
-        </div>
-
       </div>
     </div>
 
@@ -638,11 +541,40 @@ public static AppConfigSingleton getInstance() {
         <div class="tag-row"><span class="tag">Spring Boot</span><span class="tag">Angular</span><span class="tag">MySQL</span><span class="tag">Git</span></div>
         <div style="margin-top:14px;"><a class="btn btn-ghost" style="padding:8px 16px; font-size:13px;" href="https://github.com/JaviiC/Proyecto-TFG-Backend" target="_blank" rel="noopener">Ver en GitHub →</a></div>
       </div>
-      <div class="card">
-        <h3>Push Swap</h3>
-        <p>Proyecto del common core de 42: ordenar una pila de enteros usando dos pilas y un conjunto mínimo de operaciones (push, swap, rotate...), optimizando el número total de movimientos. C puro, sin librerías externas.</p>
-        <div class="tag-row"><span class="tag">C</span><span class="tag">Algoritmia</span><span class="tag">42 Madrid</span></div>
-        <div style="margin-top:14px;"><a class="btn btn-ghost" style="padding:8px 16px; font-size:13px;" href="https://github.com/JaviiC/42-PushSwap" target="_blank" rel="noopener">Ver en GitHub →</a></div>
+    </div>
+
+    <h3 style="font-size:16px; margin:40px 0 6px; color:var(--ink-dim);">Proyectos de 42 Madrid</h3>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:18px; max-width:60ch;">Common core en C: sin librerías externas, memoria gestionada a mano y, en el caso de A-Maze-ing, en pareja con otro estudiante.</p>
+    <div class="mini-project-grid">
+      <div class="mini-card">
+        <h4>Push Swap</h4>
+        <p>Ordenar una pila de enteros con dos pilas y el mínimo de operaciones posible.</p>
+        <div class="tag-row"><span class="tag">C</span><span class="tag">Algoritmia</span></div>
+        <a href="https://github.com/JaviiC/42-PushSwap" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+      <div class="mini-card">
+        <h4>Libft</h4>
+        <p>Mi propia librería en C: reimplementación de funciones de la libc más utilidades propias.</p>
+        <div class="tag-row"><span class="tag">C</span><span class="tag">Estructuras de datos</span></div>
+        <a href="https://github.com/JaviiC/42-Libft" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+      <div class="mini-card">
+        <h4>get_next_line</h4>
+        <p>Lee un fichero línea a línea gestionando buffers y memoria estática entre llamadas.</p>
+        <div class="tag-row"><span class="tag">C</span><span class="tag">Gestión de memoria</span></div>
+        <a href="https://github.com/JaviiC/42-GetNextLine" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+      <div class="mini-card">
+        <h4>ft_printf</h4>
+        <p>printf reimplementado desde cero: parseo de formato y argumentos variádicos.</p>
+        <div class="tag-row"><span class="tag">C</span><span class="tag">Varargs</span></div>
+        <a href="https://github.com/JaviiC/42-Printf" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+      <div class="mini-card">
+        <h4>A-Maze-ing</h4>
+        <p>Proyecto en pareja con otro estudiante: generación y resolución de laberintos.</p>
+        <div class="tag-row"><span class="tag">C</span><span class="tag">Trabajo en equipo</span></div>
+        <a href="https://github.com/Danielo247/A-Maze-ing" target="_blank" rel="noopener">GitHub →</a>
       </div>
     </div>
   </section>
@@ -914,6 +846,90 @@ public static AppConfigSingleton getInstance() {
       setApiStatus(res.ok, Math.round(performance.now() - t0));
     }).catch(()=> setApiStatus(false));
   });
+
+  // ---------- Explorador de patrones (árbol + código real) ----------
+  const patternsTree = {"patterns": {"builder": {"Report.java": "package com.javiercerro.portfolio.patterns.builder;\n\npublic record Report(String title, String body, String footer) {}", "ReportBuilder.java": "package com.javiercerro.portfolio.patterns.builder;\n\n/**\n * BUILDER.\n * Construcción de un objeto complejo paso a paso: cada método devuelve\n * \"this\" para poder encadenar llamadas, y el objeto final solo existe\n * una vez llamado build().\n */\npublic class ReportBuilder {\n    private String title;\n    private String body;\n    private String footer;\n\n    public ReportBuilder withTitle(String title) {\n        this.title = title;\n        return this;\n    }\n\n    public ReportBuilder withBody(String body) {\n        this.body = body;\n        return this;\n    }\n\n    public ReportBuilder withFooter(String footer) {\n        this.footer = footer;\n        return this;\n    }\n\n    public Report build() {\n        return new Report(title, body, footer);\n    }\n}"}, "command": {"Command.java": "package com.javiercerro.portfolio.patterns.command;\n\npublic interface Command {\n    String execute();\n    String description();\n}", "CommandInvoker.java": "package com.javiercerro.portfolio.patterns.command;\n\nimport java.time.LocalDateTime;\nimport java.util.ArrayList;\nimport java.util.List;\n\n/**\n * COMMAND — el invocador no sabe qué hace cada acción, solo la ejecuta\n * y guarda su historial.\n */\npublic class CommandInvoker {\n\n    public record HistoryEntry(String command, String result, LocalDateTime executedAt) {}\n\n    private final List<HistoryEntry> history = new ArrayList<>();\n\n    public String run(Command command) {\n        String result = command.execute();\n        history.add(new HistoryEntry(command.description(), result, LocalDateTime.now()));\n        return result;\n    }\n\n    public List<HistoryEntry> history() {\n        return List.copyOf(history);\n    }\n}", "LightOffCommand.java": "package com.javiercerro.portfolio.patterns.command;\n\npublic class LightOffCommand implements Command {\n    @Override\n    public String execute() {\n        return \"Luz apagada\";\n    }\n\n    @Override\n    public String description() {\n        return \"LIGHT_OFF\";\n    }\n}", "LightOnCommand.java": "package com.javiercerro.portfolio.patterns.command;\n\npublic class LightOnCommand implements Command {\n    @Override\n    public String execute() {\n        return \"Luz encendida\";\n    }\n\n    @Override\n    public String description() {\n        return \"LIGHT_ON\";\n    }\n}"}, "factory": {"Notification.java": "package com.javiercerro.portfolio.patterns.factory;\n\npublic interface Notification {\n    String send(String message);\n}", "EmailNotification.java": "package com.javiercerro.portfolio.patterns.factory;\n\npublic class EmailNotification implements Notification {\n    @Override\n    public String send(String message) {\n        return \"Email enviado: \\\"\" + message + \"\\\"\";\n    }\n}", "SmsNotification.java": "package com.javiercerro.portfolio.patterns.factory;\n\npublic class SmsNotification implements Notification {\n    @Override\n    public String send(String message) {\n        return \"SMS enviado: \\\"\" + message + \"\\\"\";\n    }\n}", "NotificationFactory.java": "package com.javiercerro.portfolio.patterns.factory;\n\n/**\n * FACTORY METHOD.\n * El código cliente pide un tipo de notificación por nombre y no necesita\n * conocer ni importar las clases concretas (EmailNotification, SmsNotification...).\n */\npublic class NotificationFactory {\n    public static Notification create(String type) {\n        return switch (type.toUpperCase()) {\n            case \"EMAIL\" -> new EmailNotification();\n            case \"SMS\" -> new SmsNotification();\n            default -> throw new IllegalArgumentException(\"Tipo de notificación desconocido: \" + type);\n        };\n    }\n}"}, "observer": {"PriceObserver.java": "package com.javiercerro.portfolio.patterns.observer;\n\npublic interface PriceObserver {\n    void onPriceChanged(double newPrice);\n    String name();\n}", "StockTicker.java": "package com.javiercerro.portfolio.patterns.observer;\n\nimport java.util.ArrayList;\nimport java.util.List;\n\n/**\n * OBSERVER — el \"sujeto\" mantiene una lista de observadores y los avisa\n * cuando cambia el precio, sin saber nada de su lógica interna.\n */\npublic class StockTicker {\n    private final List<PriceObserver> observers = new ArrayList<>();\n    private double price = 100.0;\n\n    public void subscribe(PriceObserver observer) {\n        observers.add(observer);\n    }\n\n    public List<String> updatePrice(double newPrice) {\n        this.price = newPrice;\n        List<String> triggered = new ArrayList<>();\n        for (PriceObserver observer : observers) {\n            observer.onPriceChanged(newPrice);\n            triggered.add(observer.name());\n        }\n        return triggered;\n    }\n\n    public double price() {\n        return price;\n    }\n}", "PriceLogger.java": "package com.javiercerro.portfolio.patterns.observer;\n\npublic class PriceLogger implements PriceObserver {\n    @Override\n    public void onPriceChanged(double newPrice) {\n        // en una app real, aquí se escribiría a un log/métricas\n    }\n\n    @Override\n    public String name() {\n        return \"PriceLogger\";\n    }\n}", "PriceAlertNotifier.java": "package com.javiercerro.portfolio.patterns.observer;\n\npublic class PriceAlertNotifier implements PriceObserver {\n    @Override\n    public void onPriceChanged(double newPrice) {\n        // en una app real, aquí se dispararía una alerta si supera un umbral\n    }\n\n    @Override\n    public String name() {\n        return \"PriceAlertNotifier\";\n    }\n}"}, "singleton": {"AppConfigSingleton.java": "package com.javiercerro.portfolio.patterns.singleton;\n\n/**\n * SINGLETON clásico: constructor privado + instancia estática única.\n * (En el resto del proyecto, cuando hace falta una única instancia compartida,\n * se usa directamente un bean de Spring — ver banking/repository — que logra\n * lo mismo sin escribir este boilerplate a mano. Aquí se enseña la versión\n * \"de libro\" del patrón.)\n */\npublic final class AppConfigSingleton {\n\n    private static final AppConfigSingleton INSTANCE = new AppConfigSingleton();\n\n    private final String appName = \"primeofstudio-lab\";\n    private int requestCount = 0;\n\n    private AppConfigSingleton() {}\n\n    public static AppConfigSingleton getInstance() {\n        return INSTANCE;\n    }\n\n    public synchronized int registerRequest() {\n        return ++requestCount;\n    }\n\n    public String appName() {\n        return appName;\n    }\n\n    public int identity() {\n        return System.identityHashCode(this);\n    }\n}"}, "state": {"TrafficLightState.java": "package com.javiercerro.portfolio.patterns.state;\n\npublic sealed interface TrafficLightState permits RedState, YellowState, GreenState {\n    TrafficLightState next();\n    String label();\n}", "RedState.java": "package com.javiercerro.portfolio.patterns.state;\n\npublic final class RedState implements TrafficLightState {\n    @Override\n    public TrafficLightState next() {\n        return new GreenState();\n    }\n\n    @Override\n    public String label() {\n        return \"ROJO\";\n    }\n}", "YellowState.java": "package com.javiercerro.portfolio.patterns.state;\n\npublic final class YellowState implements TrafficLightState {\n    @Override\n    public TrafficLightState next() {\n        return new RedState();\n    }\n\n    @Override\n    public String label() {\n        return \"AMARILLO\";\n    }\n}", "GreenState.java": "package com.javiercerro.portfolio.patterns.state;\n\npublic final class GreenState implements TrafficLightState {\n    @Override\n    public TrafficLightState next() {\n        return new YellowState();\n    }\n\n    @Override\n    public String label() {\n        return \"VERDE\";\n    }\n}", "TrafficLight.java": "package com.javiercerro.portfolio.patterns.state;\n\npublic class TrafficLight {\n    private TrafficLightState state = new RedState();\n\n    public TrafficLightState advance() {\n        this.state = state.next();\n        return state;\n    }\n\n    public TrafficLightState current() {\n        return state;\n    }\n}"}, "strategy": {"DiscountStrategy.java": "package com.javiercerro.portfolio.patterns.strategy;\n\npublic sealed interface DiscountStrategy permits NoDiscountStrategy, PercentageDiscountStrategy, FixedDiscountStrategy {\n    double apply(double amount);\n    String describe();\n}", "NoDiscountStrategy.java": "package com.javiercerro.portfolio.patterns.strategy;\n\npublic final class NoDiscountStrategy implements DiscountStrategy {\n    @Override\n    public double apply(double amount) {\n        return amount;\n    }\n\n    @Override\n    public String describe() {\n        return \"Sin descuento\";\n    }\n}", "PercentageDiscountStrategy.java": "package com.javiercerro.portfolio.patterns.strategy;\n\npublic final class PercentageDiscountStrategy implements DiscountStrategy {\n    private final double percentage;\n\n    public PercentageDiscountStrategy(double percentage) {\n        this.percentage = percentage;\n    }\n\n    @Override\n    public double apply(double amount) {\n        return Math.round(amount * (1 - percentage / 100.0) * 100.0) / 100.0;\n    }\n\n    @Override\n    public String describe() {\n        return \"%.0f%% de descuento\".formatted(percentage);\n    }\n}", "FixedDiscountStrategy.java": "package com.javiercerro.portfolio.patterns.strategy;\n\npublic final class FixedDiscountStrategy implements DiscountStrategy {\n    private final double fixedAmount;\n\n    public FixedDiscountStrategy(double fixedAmount) {\n        this.fixedAmount = fixedAmount;\n    }\n\n    @Override\n    public double apply(double amount) {\n        return Math.max(0, Math.round((amount - fixedAmount) * 100.0) / 100.0);\n    }\n\n    @Override\n    public String describe() {\n        return \"%.2f € de descuento fijo\".formatted(fixedAmount);\n    }\n}"}}, "banking": {"generated": {"BankingApi.java": "package com.javiercerro.portfolio.banking.generated;\n\nimport com.javiercerro.portfolio.banking.dto.AccountResponse;\nimport com.javiercerro.portfolio.banking.dto.OpenAccountRequest;\nimport com.javiercerro.portfolio.banking.dto.PaymentRequest;\nimport com.javiercerro.portfolio.banking.dto.PaymentResponse;\nimport com.javiercerro.portfolio.banking.dto.UpdateAccountRequest;\nimport org.springframework.http.ResponseEntity;\n\nimport java.util.List;\n\n/**\n * Interfaz \"generada\" a partir de resources/contracts/banking-api.yaml.\n * En un proyecto real la produce openapi-generator-maven-plugin en cada build.\n * Regla de oro: esta interfaz NUNCA se edita a mano.\n */\npublic interface BankingApi {\n    ResponseEntity<List<AccountResponse>> listAccounts();\n    ResponseEntity<AccountResponse> getAccount(String accountId);\n    ResponseEntity<AccountResponse> openAccount(OpenAccountRequest request);\n    ResponseEntity<AccountResponse> updateAccount(String accountId, UpdateAccountRequest request);\n    ResponseEntity<AccountResponse> deleteAccount(String accountId);\n    ResponseEntity<PaymentResponse> createPayment(PaymentRequest request);\n}", "BankingApiDelegate.java": "package com.javiercerro.portfolio.banking.generated;\n\nimport com.javiercerro.portfolio.banking.dto.AccountResponse;\nimport com.javiercerro.portfolio.banking.dto.OpenAccountRequest;\nimport com.javiercerro.portfolio.banking.dto.PaymentRequest;\nimport com.javiercerro.portfolio.banking.dto.PaymentResponse;\nimport com.javiercerro.portfolio.banking.dto.UpdateAccountRequest;\nimport org.springframework.http.ResponseEntity;\n\nimport java.util.List;\n\n/**\n * DELEGATE — el patrón que usa openapi-generator en modo contract-first.\n * El contrato se regenera solo cuando cambia el YAML; esta interfaz no se toca.\n */\npublic interface BankingApiDelegate {\n    ResponseEntity<List<AccountResponse>> listAccounts();\n    ResponseEntity<AccountResponse> getAccount(String accountId);\n    ResponseEntity<AccountResponse> openAccount(OpenAccountRequest request);\n    ResponseEntity<AccountResponse> updateAccount(String accountId, UpdateAccountRequest request);\n    ResponseEntity<AccountResponse> deleteAccount(String accountId);\n    ResponseEntity<PaymentResponse> createPayment(PaymentRequest request);\n}"}, "web": {"BankingController.java": "package com.javiercerro.portfolio.banking.web;\n\nimport com.javiercerro.portfolio.banking.dto.AccountResponse;\nimport com.javiercerro.portfolio.banking.dto.OpenAccountRequest;\nimport com.javiercerro.portfolio.banking.dto.PaymentRequest;\nimport com.javiercerro.portfolio.banking.dto.PaymentResponse;\nimport com.javiercerro.portfolio.banking.dto.UpdateAccountRequest;\nimport com.javiercerro.portfolio.banking.generated.BankingApi;\nimport com.javiercerro.portfolio.banking.generated.BankingApiDelegate;\nimport io.swagger.v3.oas.annotations.tags.Tag;\nimport org.springframework.http.ResponseEntity;\nimport org.springframework.web.bind.annotation.*;\n\nimport java.util.List;\n\n@RestController\n@Tag(name = \"Banking (CRUD contract-first)\", description = \"API bancaria real: OpenAPI + Delegate, CRUD completo sobre cuentas\")\npublic class BankingController implements BankingApi {\n\n    private final BankingApiDelegate delegate;\n\n    public BankingController(BankingApiDelegate delegate) {\n        this.delegate = delegate;\n    }\n\n    @Override\n    @GetMapping(\"/api/banking/accounts\")\n    public ResponseEntity<List<AccountResponse>> listAccounts() {\n        return delegate.listAccounts();\n    }\n\n    @Override\n    @GetMapping(\"/api/banking/accounts/{accountId}\")\n    public ResponseEntity<AccountResponse> getAccount(@PathVariable String accountId) {\n        return delegate.getAccount(accountId);\n    }\n\n    @Override\n    @PostMapping(\"/api/banking/accounts\")\n    public ResponseEntity<AccountResponse> openAccount(@RequestBody OpenAccountRequest request) {\n        return delegate.openAccount(request);\n    }\n\n    @Override\n    @PutMapping(\"/api/banking/accounts/{accountId}\")\n    public ResponseEntity<AccountResponse> updateAccount(@PathVariable String accountId, @RequestBody UpdateAccountRequest request) {\n        return delegate.updateAccount(accountId, request);\n    }\n\n    @Override\n    @DeleteMapping(\"/api/banking/accounts/{accountId}\")\n    public ResponseEntity<AccountResponse> deleteAccount(@PathVariable String accountId) {\n        return delegate.deleteAccount(accountId);\n    }\n\n    @Override\n    @PostMapping(\"/api/banking/payments\")\n    public ResponseEntity<PaymentResponse> createPayment(@RequestBody PaymentRequest request) {\n        return delegate.createPayment(request);\n    }\n}"}}};
+
+  const treeLabels = { 'patterns': 'patterns', 'banking': 'banking (Delegate real)' };
+  let activeFileEl = null;
+  let currentFileContent = '';
+
+  function buildTree(node, path, container, depth){
+    Object.keys(node).forEach(key => {
+      const value = node[key];
+      const fullPath = path ? path + '/' + key : key;
+      if(typeof value === 'string'){
+        const fileEl = document.createElement('div');
+        fileEl.className = 'tree-file';
+        fileEl.style.paddingLeft = (depth * 14 + 26) + 'px';
+        fileEl.textContent = '\ud83d\udcc4 ' + key;
+        fileEl.addEventListener('click', () => selectFile(fullPath, value, fileEl));
+        container.appendChild(fileEl);
+        fileEl.dataset.autopath = fullPath;
+      } else {
+        const folderEl = document.createElement('div');
+        folderEl.className = 'tree-folder';
+        folderEl.style.paddingLeft = (depth * 14) + 'px';
+        const label = depth === 0 ? (treeLabels[key] || key) : key;
+        folderEl.innerHTML = '<span class="tree-caret">\u25be</span> \ud83d\udcc1 ' + label;
+        const childrenEl = document.createElement('div');
+        childrenEl.hidden = depth > 0;
+        folderEl.querySelector('.tree-caret').textContent = childrenEl.hidden ? '\u25b8' : '\u25be';
+        folderEl.addEventListener('click', () => {
+          childrenEl.hidden = !childrenEl.hidden;
+          folderEl.querySelector('.tree-caret').textContent = childrenEl.hidden ? '\u25b8' : '\u25be';
+        });
+        container.appendChild(folderEl);
+        container.appendChild(childrenEl);
+        buildTree(value, fullPath, childrenEl, depth + 1);
+      }
+    });
+  }
+
+  function highlightJava(code){
+    const tokenRegex = /(\/\/[^\n]*)|("(?:[^"\\]|\\.)*")|(@\w+)|\b(public|private|protected|class|interface|record|enum|extends|implements|static|final|sealed|permits|new|return|void|if|else|switch|case|default|throw|throws|import|package|this|super|synchronized)\b|\b(String|int|double|boolean|long|float|char|byte|short|var)\b/g;
+    let result = '';
+    let lastIndex = 0;
+    let match;
+    while((match = tokenRegex.exec(code)) !== null){
+      result += escapeHtml(code.slice(lastIndex, match.index));
+      const full = match[0];
+      const text = escapeHtml(full);
+      if(match[1]) result += '<span class="tok-c">' + text + '</span>';
+      else if(match[2]) result += '<span class="tok-s">' + text + '</span>';
+      else if(match[3]) result += '<span class="tok-a">' + text + '</span>';
+      else if(match[4]) result += '<span class="tok-k">' + text + '</span>';
+      else if(match[5]) result += '<span class="tok-t">' + text + '</span>';
+      lastIndex = tokenRegex.lastIndex;
+    }
+    result += escapeHtml(code.slice(lastIndex));
+    return result;
+  }
+
+  function selectFile(path, content, el){
+    if(activeFileEl) activeFileEl.classList.remove('active');
+    el.classList.add('active');
+    activeFileEl = el;
+    currentFileContent = content;
+    document.getElementById('code-path').textContent = path;
+    document.getElementById('code-content').innerHTML = highlightJava(content);
+  }
+
+  function copyCode(){
+    const btn = document.getElementById('btn-copy');
+    navigator.clipboard.writeText(currentFileContent).then(() => {
+      const original = btn.textContent;
+      btn.textContent = 'Copiado';
+      setTimeout(() => { btn.textContent = original; }, 1500);
+    });
+  }
+
+  const treePanel = document.getElementById('tree-panel');
+  if(treePanel){
+    buildTree(patternsTree, '', treePanel, 0);
+    const firstFile = treePanel.querySelector('.tree-file');
+    if(firstFile) firstFile.click();
+  }
 </script>
 </body>
 </html>
