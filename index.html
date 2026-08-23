@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Javier del Cerro de Nava — Software Developer · Backend Developer</title>
-<meta name="description" content="Portfolio de Javier del Cerro de Nava, desarrollador backend Java/Spring Boot, con un laboratorio interactivo que consume una API bancaria real.">
+<meta name="description" content="Portfolio de Javier del Cerro de Nava, desarrollador backend Java/Spring Boot.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -183,7 +183,6 @@
   .tok-c{color:var(--muted); font-style:italic;}
   .tok-a{color:var(--accent);}
 
-  .lab-intro{max-width:66ch;}
   .lab-tabs{display:flex; gap:8px; margin:28px 0 24px; flex-wrap:wrap;}
   .lab-tab{
     font-family:var(--font-mono); font-size:13px; padding:9px 16px; border-radius:8px;
@@ -191,35 +190,7 @@
   }
   .lab-tab.active{background:var(--accent); color:var(--accent-ink); border-color:var(--accent);}
 
-  .console-panel{background:var(--bg-elevated); border:1px solid var(--border); border-radius:var(--radius); padding:26px;}
-  .field-row{display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin-bottom:18px;}
-  .field{display:flex; flex-direction:column; gap:6px; flex:1; min-width:220px;}
-  .field label{font-size:12.5px; color:var(--muted); font-family:var(--font-mono);}
-  .field input, .field select, .field textarea{
-    background:var(--bg); border:1px solid var(--border); border-radius:8px; color:var(--ink);
-    padding:10px 12px; font-family:var(--font-mono); font-size:13px;
-  }
-  .field textarea{min-height:96px; resize:vertical;}
-  .method-badge{font-family:var(--font-mono); font-size:12px; font-weight:600; padding:4px 8px; border-radius:6px;}
-  .method-get{background:rgba(79,193,176,0.15); color:var(--accent-2);}
-  .method-post{background:rgba(242,166,61,0.15); color:var(--accent);}
-  .method-put{background:rgba(127,168,224,0.15); color:var(--info);}
-  .method-delete{background:rgba(224,101,79,0.15); color:var(--danger);}
-  #path-label{font-family:var(--font-mono); font-size:13px; color:var(--ink-dim);}
-  #auth-badge{font-family:var(--font-mono); font-size:11.5px; color:var(--danger); border:1px solid rgba(224,101,79,0.4); padding:3px 8px; border-radius:6px;}
-  .jwt-panel{margin:16px 0; display:grid; grid-template-columns:1fr 1fr; gap:12px;}
-  .jwt-block{background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:10px 12px;}
-  .jwt-block h4{font-family:var(--font-mono); font-size:11px; color:var(--muted); margin:0 0 6px; text-transform:uppercase; letter-spacing:0.08em;}
-  .jwt-block pre{margin:0; font-size:11.5px; white-space:pre-wrap; word-break:break-word;}
-  .console-meta{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:10px;}
-  .status-pill{font-family:var(--font-mono); font-size:12px; padding:4px 10px; border-radius:999px;}
-  .status-pill.ok{background:rgba(79,193,176,0.15); color:var(--accent-2);}
-  .status-pill.err{background:rgba(224,101,79,0.15); color:var(--danger);}
   .mono-small{font-family:var(--font-mono); font-size:11.5px; color:var(--muted);}
-  .response-body{
-    background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:14px;
-    font-family:var(--font-mono); font-size:12.5px; max-height:320px; overflow:auto; white-space:pre-wrap; word-break:break-word;
-  }
   .console-error{color:var(--danger); font-size:13.5px;}
 
   .patterns-note{max-width:68ch; margin-bottom:26px; color:var(--muted); font-size:14px;}
@@ -257,16 +228,12 @@
     overflow:hidden;
   }
   .status-left, .status-right{display:flex; align-items:center; gap:14px; white-space:nowrap;}
-  .dot{width:8px; height:8px; border-radius:50%; display:inline-block;}
-  .dot-off{background:var(--muted);}
-  .dot-live{background:var(--accent-2); box-shadow:0 0 0 3px rgba(79,193,176,0.2);}
-
+  
   @media (max-width:860px){
     .hero-grid{grid-template-columns:1fr;}
     .project-grid{grid-template-columns:1fr;}
     .mini-project-grid{grid-template-columns:1fr 1fr;}
     .arch-grid{grid-template-columns:1fr;}
-    .jwt-panel{grid-template-columns:1fr;}
     section{padding:64px 18px;}
     .status-right .status-clock{display:none;}
     .code-explorer{grid-template-columns:1fr;}
@@ -286,7 +253,6 @@
       <a class="nav-link" href="#sobre-mi">sobre-mi</a>
       <a class="nav-link" href="#experiencia">experiencia</a>
       <a class="nav-link" href="#estudios">estudios</a>
-      <a class="nav-link" href="#laboratorio">laboratorio</a>
       <a class="nav-link" href="#patrones">patrones</a>
       <a class="nav-link" href="#proyectos">proyectos</a>
       <a class="nav-link" href="#tecnologias">tecnologias</a>
@@ -304,7 +270,7 @@
         <h1>Javier del Cerro de Nava</h1>
         <p class="lede">Construyo software que sobreviven a producción. La última vez, migrando microservicios bancarios de MuleSoft a Java para Santander USA, desarrollando todo el ciclo de vida desde el análisis hasta su puesta en producción.</p>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href="#laboratorio">Entrar al laboratorio</a>
+          <a class="btn btn-primary" href="#proyectos">Ver proyectos</a>
           <a class="btn btn-ghost" href="mailto:jdelcerrodenava@gmail.com">Escríbeme</a>
         </div>
       </div>
@@ -320,7 +286,7 @@
         </div>
       </div>
     </div>
-    <p class="terminal-caption">↑ así responde mi API. La versión de verdad, con la que puedes interactuar, está en el laboratorio.</p>
+    <p class="terminal-caption">↑ así responde mi API.</p>
   </section>
 
   <section class="about" id="sobre-mi">
@@ -405,71 +371,6 @@
     </div>
   </section>
 
-  <section id="laboratorio">
-    <span class="eyebrow">Laboratorio</span>
-    <h2 style="font-size:26px; margin-bottom:10px;">Comunicación API REST + JWT</h2>
-    <p class="lab-intro">Esto habla directamente con mi API bancaria real: crea, consulta, modifica y elimina cuentas, con JWT de verdad y JSON de verdad. Las mismas herramientas que uso a diario: Postman, Swagger, JWT. Todo lo que ves aquí es el paquete <code>banking/</code> del backend; es lo único que este laboratorio consume.</p>
-
-    <div class="console-panel" id="lab-console" style="margin-top:24px;">
-      <div class="field-row">
-        <div class="field" style="flex:2;">
-          <label for="backend-url">URL del backend</label>
-          <input type="text" id="backend-url" value="http://localhost:8080" spellcheck="false">
-        </div>
-        <div>
-          <button class="btn btn-primary" id="btn-token" onclick="getToken()">Obtener token</button>
-        </div>
-      </div>
-      <p class="mono-small" id="token-status">Sin token todavía. Los endpoints marcados con 🔒 lo necesitan.</p>
-
-      <div class="jwt-panel" id="jwt-panel" hidden>
-        <div class="jwt-block"><h4>Header decodificado</h4><pre id="jwt-header"></pre></div>
-        <div class="jwt-block"><h4>Payload decodificado</h4><pre id="jwt-payload"></pre></div>
-      </div>
-
-      <div class="field-row" style="margin-top:22px;">
-        <div class="field">
-          <label for="endpoint-select">Endpoint</label>
-          <select id="endpoint-select" onchange="updateEndpointUI()">
-            <optgroup label="Cuentas (CRUD)">
-              <option value="banking-list">Listar cuentas</option>
-              <option value="banking-get">Ver una cuenta</option>
-              <option value="banking-create">Crear cuenta 🔒</option>
-              <option value="banking-update">Modificar cuenta 🔒</option>
-              <option value="banking-delete">Eliminar cuenta 🔒</option>
-            </optgroup>
-            <optgroup label="Otros">
-              <option value="banking-payment">Crear pago 🔒</option>
-              <option value="banking-contract">Ver contrato OpenAPI</option>
-            </optgroup>
-          </select>
-        </div>
-      </div>
-
-      <div class="field-row" style="align-items:center;">
-        <span class="method-badge method-get" id="method-badge">GET</span>
-        <span id="path-label">/api/banking/accounts</span>
-        <span id="auth-badge" hidden>requiere JWT</span>
-      </div>
-
-      <div class="field" id="path-param-field" hidden>
-        <label id="path-param-label" for="path-param-value">accountId</label>
-        <input type="text" id="path-param-value" placeholder="p.ej. CTA-3F2A1B (lo devuelve &quot;Crear cuenta&quot;)" spellcheck="false">
-      </div>
-
-      <div class="field">
-        <label for="request-body">Cuerpo de la petición (editable)</label>
-        <textarea id="request-body" hidden spellcheck="false"></textarea>
-      </div>
-
-      <div style="margin-top:16px;">
-        <button class="btn btn-primary" id="btn-send" onclick="sendRequest()">Enviar petición</button>
-      </div>
-
-      <div id="response-panel" style="margin-top:20px;"></div>
-    </div>
-  </section>
-
   <section id="patrones">
     <span class="eyebrow">Patrones y arquitecturas</span>
     <h2 style="font-size:26px; margin-bottom:10px;">Lo que controlo, explicado</h2>
@@ -515,7 +416,7 @@
           <div class="stack-box">delegate · lógica de negocio real</div>
           <div class="stack-arrow">↓</div>
           <div class="stack-box">domain + repository · entidades</div>
-          <p class="arch-note">Así está construido literalmente el paquete <code>banking/</code> de este laboratorio.</p>
+          <p class="arch-note">Así está construido literalmente el código backend de mis proyectos.</p>
         </div>
         <div class="arch-card">
           <h3>Hexagonal</h3>
@@ -524,7 +425,7 @@
             <div class="hex-mid"></div>
             <div class="hex-core">Dominio</div>
           </div>
-          <p class="arch-note">Núcleo puro en el centro; puertos alrededor; adaptadores (REST, JPA...) en el borde. Es la evolución natural del laboratorio si mañana necesitara cambiar de framework sin tocar el dominio.</p>
+          <p class="arch-note">Núcleo puro en el centro; puertos alrededor; adaptadores (REST, JPA...) en el borde. Es la evolución natural de un proyecto si mañana necesitara cambiar de framework sin tocar el dominio.</p>
         </div>
       </div>
     </div>
@@ -535,10 +436,9 @@
     <h2 style="font-size:26px; margin-bottom:28px;">Lo que he construido de principio a fin</h2>
     <div class="project-grid">
       <div class="card">
-        <h3>Laboratorio bancario interactivo</h3>
+        <h3>API Bancaria (Backend)</h3>
         <p>CRUD completo sobre cuentas con un backend Spring Boot real: JWT de verdad, contrato OpenAPI + Delegate, y respuestas JSON reales para cada acción.</p>
         <div class="tag-row"><span class="tag">Java</span><span class="tag">Spring Security</span><span class="tag">OpenAPI</span><span class="tag">Delegate</span></div>
-        <div style="margin-top:14px;"><a class="btn btn-ghost" style="padding:8px 16px; font-size:13px;" href="#laboratorio">Ver en el laboratorio →</a></div>
       </div>
       <div class="card">
         <h3>TFG — Sistema de asignación de tareas docentes</h3>
@@ -628,7 +528,6 @@
 
 <div class="statusbar">
   <div class="status-left">
-    <span><span class="dot dot-off" id="status-dot"></span> <span id="status-label">API sin conectar</span></span>
     <span id="status-section">~/inicio</span>
   </div>
   <div class="status-right">
@@ -705,152 +604,9 @@
     document.querySelectorAll('.lab-panel').forEach(p => p.hidden = (p.id !== 'panel-' + name));
   }
 
-  const endpointData = {
-    'banking-list':    { method:'GET',    path:'/api/banking/accounts', auth:false, body:null, raw:false },
-    'banking-get':     { method:'GET',    path:'/api/banking/accounts/{accountId}', auth:false, body:null, raw:false, pathParam:'accountId' },
-    'banking-create':  { method:'POST',   path:'/api/banking/accounts', auth:true,
-                          body: JSON.stringify({holderId:'12345678Z', accountType:'CHECKING'}, null, 2), raw:false },
-    'banking-update':  { method:'PUT',    path:'/api/banking/accounts/{accountId}', auth:true,
-                          body: JSON.stringify({holderId:'12345678Z', accountType:'SAVINGS', status:'ACTIVE'}, null, 2),
-                          raw:false, pathParam:'accountId' },
-    'banking-delete':  { method:'DELETE', path:'/api/banking/accounts/{accountId}', auth:true, body:null, raw:false, pathParam:'accountId' },
-    'banking-payment': { method:'POST',   path:'/api/banking/payments', auth:true,
-                          body: JSON.stringify({accountId:'CTA-000000', amount:150.0, currency:'USD'}, null, 2), raw:false },
-    'banking-contract':{ method:'GET',    path:'/api/banking/contract', auth:false, body:null, raw:true },
-  };
-
-  let currentToken = null;
-
-  function updateEndpointUI(){
-    const ep = endpointData[document.getElementById('endpoint-select').value];
-    const methodBadge = document.getElementById('method-badge');
-    methodBadge.textContent = ep.method;
-    methodBadge.className = 'method-badge method-' + ep.method.toLowerCase();
-    document.getElementById('path-label').textContent = ep.path;
-    const bodyField = document.getElementById('request-body');
-    if(ep.body !== null){ bodyField.value = ep.body; bodyField.hidden = false; }
-    else { bodyField.value = ''; bodyField.hidden = true; }
-    const pathParamField = document.getElementById('path-param-field');
-    if(ep.pathParam){
-      document.getElementById('path-param-label').textContent = ep.pathParam;
-      pathParamField.hidden = false;
-    } else {
-      pathParamField.hidden = true;
-      document.getElementById('path-param-value').value = '';
-    }
-    document.getElementById('auth-badge').hidden = !ep.auth;
-    document.getElementById('response-panel').innerHTML = '';
-  }
-  updateEndpointUI();
-
-  function base64UrlDecode(str){
-    str = str.replace(/-/g,'+').replace(/_/g,'/');
-    while(str.length % 4) str += '=';
-    return decodeURIComponent(atob(str).split('').map(c => '%' + c.charCodeAt(0).toString(16).padStart(2,'0')).join(''));
-  }
-  function renderJwt(token){
-    const parts = token.split('.');
-    try{
-      document.getElementById('jwt-header').textContent = JSON.stringify(JSON.parse(base64UrlDecode(parts[0])), null, 2);
-      document.getElementById('jwt-payload').textContent = JSON.stringify(JSON.parse(base64UrlDecode(parts[1])), null, 2);
-      document.getElementById('jwt-panel').hidden = false;
-    }catch(e){}
-  }
-
-  function setApiStatus(connected, ms){
-    const dot = document.getElementById('status-dot');
-    dot.classList.toggle('dot-live', connected);
-    dot.classList.toggle('dot-off', !connected);
-    document.getElementById('status-label').textContent = connected
-      ? ('API conectada' + (ms !== undefined ? ' · ' + ms + ' ms' : ''))
-      : 'API sin conectar';
-  }
-
-  async function getToken(){
-    const base = document.getElementById('backend-url').value.trim().replace(/\/$/,'');
-    const btn = document.getElementById('btn-token');
-    const original = btn.textContent;
-    btn.disabled = true; btn.textContent = 'Pidiendo token…';
-    const t0 = performance.now();
-    try{
-      const res = await fetch(base + '/api/auth/demo-token', {method:'POST'});
-      const ms = Math.round(performance.now() - t0);
-      setApiStatus(res.ok, ms);
-      if(!res.ok) throw new Error('HTTP ' + res.status);
-      const data = await res.json();
-      currentToken = data.token;
-      document.getElementById('token-status').textContent = 'Token obtenido · expira en ' + data.expiresInSeconds + 's';
-      renderJwt(currentToken);
-    }catch(err){
-      setApiStatus(false);
-      document.getElementById('token-status').textContent = 'Error al pedir el token: ' + err.message;
-    }finally{
-      btn.disabled = false; btn.textContent = original;
-    }
-  }
-
   function escapeHtml(str){
     return str.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
-
-  async function sendRequest(){
-    const base = document.getElementById('backend-url').value.trim().replace(/\/$/,'');
-    const id = document.getElementById('endpoint-select').value;
-    const ep = endpointData[id];
-    const out = document.getElementById('response-panel');
-    const btn = document.getElementById('btn-send');
-
-    if(ep.auth && !currentToken){
-      out.innerHTML = '<p class="console-error">Este endpoint requiere token. Pulsa "Obtener token" primero.</p>';
-      return;
-    }
-
-    let resolvedPath = ep.path;
-    if(ep.pathParam){
-      const value = document.getElementById('path-param-value').value.trim();
-      if(!value){
-        out.innerHTML = '<p class="console-error">Rellena "' + ep.pathParam + '" antes de enviar (lo devuelve "Crear cuenta").</p>';
-        return;
-      }
-      resolvedPath = resolvedPath.replace('{' + ep.pathParam + '}', encodeURIComponent(value));
-    }
-
-    const headers = {};
-    if(ep.auth) headers['Authorization'] = 'Bearer ' + currentToken;
-    if(ep.body !== null) headers['Content-Type'] = 'application/json';
-
-    btn.disabled = true; btn.textContent = 'Enviando…';
-    const t0 = performance.now();
-    try{
-      const res = await fetch(base + resolvedPath, {
-        method: ep.method,
-        headers,
-        body: ep.body !== null ? document.getElementById('request-body').value : undefined
-      });
-      const ms = Math.round(performance.now() - t0);
-      setApiStatus(res.ok, ms);
-      const text = ep.raw ? await res.text() : JSON.stringify(await res.json(), null, 2);
-      out.innerHTML =
-        '<div class="console-meta">' +
-          '<span class="status-pill ' + (res.ok ? 'ok' : 'err') + '">' + res.status + ' ' + res.statusText + '</span>' +
-          '<span class="mono-small">' + ms + ' ms</span>' +
-        '</div>' +
-        '<pre class="response-body">' + escapeHtml(text) + '</pre>';
-    }catch(err){
-      setApiStatus(false);
-      out.innerHTML = '<p class="console-error">No se pudo conectar con ' + base + '. Comprueba que el backend esté corriendo, la URL, y CORS.<br><span class="mono-small">' + err.message + '</span></p>';
-    }finally{
-      btn.disabled = false; btn.textContent = 'Enviar petición';
-    }
-  }
-
-  window.addEventListener('load', ()=>{
-    const base = document.getElementById('backend-url').value.trim().replace(/\/$/,'');
-    const t0 = performance.now();
-    fetch(base + '/api/banking/accounts').then(res=>{
-      setApiStatus(res.ok, Math.round(performance.now() - t0));
-    }).catch(()=> setApiStatus(false));
-  });
 
   // ---------- Explorador de patrones (EN VIVO desde GitHub, no incrustado) ----------
   const GITHUB_REPO = 'JaviiC/portfolio-backend';
