@@ -472,7 +472,7 @@
   <section id="patrones">
     <span class="eyebrow">Patrones y arquitecturas</span>
     <h2 style="font-size:26px; margin-bottom:10px;">Lo que controlo, explicado</h2>
-    <p class="patterns-note">Cada fichero que ves aquí se carga en directo desde <a href="https://github.com/JaviiC/portfolio-backend" target="_blank" rel="noopener" style="color:var(--accent-2)">mi repositorio en GitHub</a> — no es una copia ni un resumen.</p>
+    <p class="patterns-note">Esta sección es intencionadamente estática: no llama a ningún backend. Es un explorador de carpetas con el código real y completo de <code>patterns/</code> (Java puro, sin Spring) y de las piezas del <code>Delegate</code> que sí están en marcha en el laboratorio de arriba — el mismo código, no un resumen escrito a mano.</p>
 
     <div class="lab-tabs">
       <button class="lab-tab active" data-tab="pat-patrones">Patrones de diseño</button>
@@ -485,10 +485,7 @@
         <div class="code-panel">
           <div class="code-breadcrumb">
             <span id="code-path">patterns</span>
-            <span style="display:flex; gap:8px;">
-              <button class="code-copy-btn" onclick="loadPatternsExplorer()" title="Volver a pedir el árbol a GitHub">🔄 Recargar</button>
-              <button class="code-copy-btn" id="btn-copy" onclick="copyCode()">Copiar</button>
-            </span>
+            <button class="code-copy-btn" id="btn-copy" onclick="copyCode()">Copiar</button>
           </div>
           <pre class="code-content"><code id="code-content"></code></pre>
         </div>
@@ -850,19 +847,44 @@
     }).catch(()=> setApiStatus(false));
   });
 
-  // ---------- Explorador de patrones (EN VIVO desde GitHub, no incrustado) ----------
-  const GITHUB_REPO = 'JaviiC/portfolio-backend';
-  const GITHUB_BRANCH = 'master';
-  const PATTERNS_BASE = 'src/main/java/com/javiercerro/portfolio/patterns';
-  const DELEGATE_FILES = [
-    'src/main/java/com/javiercerro/portfolio/banking/generated/BankingApi.java',
-    'src/main/java/com/javiercerro/portfolio/banking/generated/BankingApiDelegate.java',
-    'src/main/java/com/javiercerro/portfolio/banking/web/BankingController.java',
-  ];
+  // ---------- Explorador de patrones (árbol + código real) ----------
+  const patternsTree = {"patterns": {"builder": {"Report.java": "package com.javiercerro.portfolio.patterns.builder;\n\npublic record Report(String title, String body, String footer) {}", "ReportBuilder.java": "package com.javiercerro.portfolio.patterns.builder;\n\n/**\n * BUILDER.\n * Construcción de un objeto complejo paso a paso: cada método devuelve\n * \"this\" para poder encadenar llamadas, y el objeto final solo existe\n * una vez llamado build().\n */\npublic class ReportBuilder {\n    private String title;\n    private String body;\n    private String footer;\n\n    public ReportBuilder withTitle(String title) {\n        this.title = title;\n        return this;\n    }\n\n    public ReportBuilder withBody(String body) {\n        this.body = body;\n        return this;\n    }\n\n    public ReportBuilder withFooter(String footer) {\n        this.footer = footer;\n        return this;\n    }\n\n    public Report build() {\n        return new Report(title, body, footer);\n    }\n}"}, "command": {"Command.java": "package com.javiercerro.portfolio.patterns.command;\n\npublic interface Command {\n    String execute();\n    String description();\n}", "CommandInvoker.java": "package com.javiercerro.portfolio.patterns.command;\n\nimport java.time.LocalDateTime;\nimport java.util.ArrayList;\nimport java.util.List;\n\n/**\n * COMMAND — el invocador no sabe qué hace cada acción, solo la ejecuta\n * y guarda su historial.\n */\npublic class CommandInvoker {\n\n    public record HistoryEntry(String command, String result, LocalDateTime executedAt) {}\n\n    private final List<HistoryEntry> history = new ArrayList<>();\n\n    public String run(Command command) {\n        String result = command.execute();\n        history.add(new HistoryEntry(command.description(), result, LocalDateTime.now()));\n        return result;\n    }\n\n    public List<HistoryEntry> history() {\n        return List.copyOf(history);\n    }\n}", "LightOffCommand.java": "package com.javiercerro.portfolio.patterns.command;\n\npublic class LightOffCommand implements Command {\n    @Override\n    public String execute() {\n        return \"Luz apagada\";\n    }\n\n    @Override\n    public String description() {\n        return \"LIGHT_OFF\";\n    }\n}", "LightOnCommand.java": "package com.javiercerro.portfolio.patterns.command;\n\npublic class LightOnCommand implements Command {\n    @Override\n    public String execute() {\n        return \"Luz encendida\";\n    }\n\n    @Override\n    public String description() {\n        return \"LIGHT_ON\";\n    }\n}"}, "factory": {"Notification.java": "package com.javiercerro.portfolio.patterns.factory;\n\npublic interface Notification {\n    String send(String message);\n}", "EmailNotification.java": "package com.javiercerro.portfolio.patterns.factory;\n\npublic class EmailNotification implements Notification {\n    @Override\n    public String send(String message) {\n        return \"Email enviado: \\\"\" + message + \"\\\"\";\n    }\n}", "SmsNotification.java": "package com.javiercerro.portfolio.patterns.factory;\n\npublic class SmsNotification implements Notification {\n    @Override\n    public String send(String message) {\n        return \"SMS enviado: \\\"\" + message + \"\\\"\";\n    }\n}", "NotificationFactory.java": "package com.javiercerro.portfolio.patterns.factory;\n\n/**\n * FACTORY METHOD.\n * El código cliente pide un tipo de notificación por nombre y no necesita\n * conocer ni importar las clases concretas (EmailNotification, SmsNotification...).\n */\npublic class NotificationFactory {\n    public static Notification create(String type) {\n        return switch (type.toUpperCase()) {\n            case \"EMAIL\" -> new EmailNotification();\n            case \"SMS\" -> new SmsNotification();\n            default -> throw new IllegalArgumentException(\"Tipo de notificación desconocido: \" + type);\n        };\n    }\n}"}, "observer": {"PriceObserver.java": "package com.javiercerro.portfolio.patterns.observer;\n\npublic interface PriceObserver {\n    void onPriceChanged(double newPrice);\n    String name();\n}", "StockTicker.java": "package com.javiercerro.portfolio.patterns.observer;\n\nimport java.util.ArrayList;\nimport java.util.List;\n\n/**\n * OBSERVER — el \"sujeto\" mantiene una lista de observadores y los avisa\n * cuando cambia el precio, sin saber nada de su lógica interna.\n */\npublic class StockTicker {\n    private final List<PriceObserver> observers = new ArrayList<>();\n    private double price = 100.0;\n\n    public void subscribe(PriceObserver observer) {\n        observers.add(observer);\n    }\n\n    public List<String> updatePrice(double newPrice) {\n        this.price = newPrice;\n        List<String> triggered = new ArrayList<>();\n        for (PriceObserver observer : observers) {\n            observer.onPriceChanged(newPrice);\n            triggered.add(observer.name());\n        }\n        return triggered;\n    }\n\n    public double price() {\n        return price;\n    }\n}", "PriceLogger.java": "package com.javiercerro.portfolio.patterns.observer;\n\npublic class PriceLogger implements PriceObserver {\n    @Override\n    public void onPriceChanged(double newPrice) {\n        // en una app real, aquí se escribiría a un log/métricas\n    }\n\n    @Override\n    public String name() {\n        return \"PriceLogger\";\n    }\n}", "PriceAlertNotifier.java": "package com.javiercerro.portfolio.patterns.observer;\n\npublic class PriceAlertNotifier implements PriceObserver {\n    @Override\n    public void onPriceChanged(double newPrice) {\n        // en una app real, aquí se dispararía una alerta si supera un umbral\n    }\n\n    @Override\n    public String name() {\n        return \"PriceAlertNotifier\";\n    }\n}"}, "singleton": {"AppConfigSingleton.java": "package com.javiercerro.portfolio.patterns.singleton;\n\n/**\n * SINGLETON clásico: constructor privado + instancia estática única.\n * (En el resto del proyecto, cuando hace falta una única instancia compartida,\n * se usa directamente un bean de Spring — ver banking/repository — que logra\n * lo mismo sin escribir este boilerplate a mano. Aquí se enseña la versión\n * \"de libro\" del patrón.)\n */\npublic final class AppConfigSingleton {\n\n    private static final AppConfigSingleton INSTANCE = new AppConfigSingleton();\n\n    private final String appName = \"primeofstudio-lab\";\n    private int requestCount = 0;\n\n    private AppConfigSingleton() {}\n\n    public static AppConfigSingleton getInstance() {\n        return INSTANCE;\n    }\n\n    public synchronized int registerRequest() {\n        return ++requestCount;\n    }\n\n    public String appName() {\n        return appName;\n    }\n\n    public int identity() {\n        return System.identityHashCode(this);\n    }\n}"}, "state": {"TrafficLightState.java": "package com.javiercerro.portfolio.patterns.state;\n\npublic sealed interface TrafficLightState permits RedState, YellowState, GreenState {\n    TrafficLightState next();\n    String label();\n}", "RedState.java": "package com.javiercerro.portfolio.patterns.state;\n\npublic final class RedState implements TrafficLightState {\n    @Override\n    public TrafficLightState next() {\n        return new GreenState();\n    }\n\n    @Override\n    public String label() {\n        return \"ROJO\";\n    }\n}", "YellowState.java": "package com.javiercerro.portfolio.patterns.state;\n\npublic final class YellowState implements TrafficLightState {\n    @Override\n    public TrafficLightState next() {\n        return new RedState();\n    }\n\n    @Override\n    public String label() {\n        return \"AMARILLO\";\n    }\n}", "GreenState.java": "package com.javiercerro.portfolio.patterns.state;\n\npublic final class GreenState implements TrafficLightState {\n    @Override\n    public TrafficLightState next() {\n        return new YellowState();\n    }\n\n    @Override\n    public String label() {\n        return \"VERDE\";\n    }\n}", "TrafficLight.java": "package com.javiercerro.portfolio.patterns.state;\n\npublic class TrafficLight {\n    private TrafficLightState state = new RedState();\n\n    public TrafficLightState advance() {\n        this.state = state.next();\n        return state;\n    }\n\n    public TrafficLightState current() {\n        return state;\n    }\n}"}, "strategy": {"DiscountStrategy.java": "package com.javiercerro.portfolio.patterns.strategy;\n\npublic sealed interface DiscountStrategy permits NoDiscountStrategy, PercentageDiscountStrategy, FixedDiscountStrategy {\n    double apply(double amount);\n    String describe();\n}", "NoDiscountStrategy.java": "package com.javiercerro.portfolio.patterns.strategy;\n\npublic final class NoDiscountStrategy implements DiscountStrategy {\n    @Override\n    public double apply(double amount) {\n        return amount;\n    }\n\n    @Override\n    public String describe() {\n        return \"Sin descuento\";\n    }\n}", "PercentageDiscountStrategy.java": "package com.javiercerro.portfolio.patterns.strategy;\n\npublic final class PercentageDiscountStrategy implements DiscountStrategy {\n    private final double percentage;\n\n    public PercentageDiscountStrategy(double percentage) {\n        this.percentage = percentage;\n    }\n\n    @Override\n    public double apply(double amount) {\n        return Math.round(amount * (1 - percentage / 100.0) * 100.0) / 100.0;\n    }\n\n    @Override\n    public String describe() {\n        return \"%.0f%% de descuento\".formatted(percentage);\n    }\n}", "FixedDiscountStrategy.java": "package com.javiercerro.portfolio.patterns.strategy;\n\npublic final class FixedDiscountStrategy implements DiscountStrategy {\n    private final double fixedAmount;\n\n    public FixedDiscountStrategy(double fixedAmount) {\n        this.fixedAmount = fixedAmount;\n    }\n\n    @Override\n    public double apply(double amount) {\n        return Math.max(0, Math.round((amount - fixedAmount) * 100.0) / 100.0);\n    }\n\n    @Override\n    public String describe() {\n        return \"%.2f € de descuento fijo\".formatted(fixedAmount);\n    }\n}"}}, "banking": {"generated": {"BankingApi.java": "package com.javiercerro.portfolio.banking.generated;\n\nimport com.javiercerro.portfolio.banking.dto.AccountResponse;\nimport com.javiercerro.portfolio.banking.dto.OpenAccountRequest;\nimport com.javiercerro.portfolio.banking.dto.PaymentRequest;\nimport com.javiercerro.portfolio.banking.dto.PaymentResponse;\nimport com.javiercerro.portfolio.banking.dto.UpdateAccountRequest;\nimport org.springframework.http.ResponseEntity;\n\nimport java.util.List;\n\n/**\n * Interfaz \"generada\" a partir de resources/contracts/banking-api.yaml.\n * En un proyecto real la produce openapi-generator-maven-plugin en cada build.\n * Regla de oro: esta interfaz NUNCA se edita a mano.\n */\npublic interface BankingApi {\n    ResponseEntity<List<AccountResponse>> listAccounts();\n    ResponseEntity<AccountResponse> getAccount(String accountId);\n    ResponseEntity<AccountResponse> openAccount(OpenAccountRequest request);\n    ResponseEntity<AccountResponse> updateAccount(String accountId, UpdateAccountRequest request);\n    ResponseEntity<AccountResponse> deleteAccount(String accountId);\n    ResponseEntity<PaymentResponse> createPayment(PaymentRequest request);\n}", "BankingApiDelegate.java": "package com.javiercerro.portfolio.banking.generated;\n\nimport com.javiercerro.portfolio.banking.dto.AccountResponse;\nimport com.javiercerro.portfolio.banking.dto.OpenAccountRequest;\nimport com.javiercerro.portfolio.banking.dto.PaymentRequest;\nimport com.javiercerro.portfolio.banking.dto.PaymentResponse;\nimport com.javiercerro.portfolio.banking.dto.UpdateAccountRequest;\nimport org.springframework.http.ResponseEntity;\n\nimport java.util.List;\n\n/**\n * DELEGATE — el patrón que usa openapi-generator en modo contract-first.\n * El contrato se regenera solo cuando cambia el YAML; esta interfaz no se toca.\n */\npublic interface BankingApiDelegate {\n    ResponseEntity<List<AccountResponse>> listAccounts();\n    ResponseEntity<AccountResponse> getAccount(String accountId);\n    ResponseEntity<AccountResponse> openAccount(OpenAccountRequest request);\n    ResponseEntity<AccountResponse> updateAccount(String accountId, UpdateAccountRequest request);\n    ResponseEntity<AccountResponse> deleteAccount(String accountId);\n    ResponseEntity<PaymentResponse> createPayment(PaymentRequest request);\n}"}, "web": {"BankingController.java": "package com.javiercerro.portfolio.banking.web;\n\nimport com.javiercerro.portfolio.banking.dto.AccountResponse;\nimport com.javiercerro.portfolio.banking.dto.OpenAccountRequest;\nimport com.javiercerro.portfolio.banking.dto.PaymentRequest;\nimport com.javiercerro.portfolio.banking.dto.PaymentResponse;\nimport com.javiercerro.portfolio.banking.dto.UpdateAccountRequest;\nimport com.javiercerro.portfolio.banking.generated.BankingApi;\nimport com.javiercerro.portfolio.banking.generated.BankingApiDelegate;\nimport io.swagger.v3.oas.annotations.tags.Tag;\nimport org.springframework.http.ResponseEntity;\nimport org.springframework.web.bind.annotation.*;\n\nimport java.util.List;\n\n@RestController\n@Tag(name = \"Banking (CRUD contract-first)\", description = \"API bancaria real: OpenAPI + Delegate, CRUD completo sobre cuentas\")\npublic class BankingController implements BankingApi {\n\n    private final BankingApiDelegate delegate;\n\n    public BankingController(BankingApiDelegate delegate) {\n        this.delegate = delegate;\n    }\n\n    @Override\n    @GetMapping(\"/api/banking/accounts\")\n    public ResponseEntity<List<AccountResponse>> listAccounts() {\n        return delegate.listAccounts();\n    }\n\n    @Override\n    @GetMapping(\"/api/banking/accounts/{accountId}\")\n    public ResponseEntity<AccountResponse> getAccount(@PathVariable String accountId) {\n        return delegate.getAccount(accountId);\n    }\n\n    @Override\n    @PostMapping(\"/api/banking/accounts\")\n    public ResponseEntity<AccountResponse> openAccount(@RequestBody OpenAccountRequest request) {\n        return delegate.openAccount(request);\n    }\n\n    @Override\n    @PutMapping(\"/api/banking/accounts/{accountId}\")\n    public ResponseEntity<AccountResponse> updateAccount(@PathVariable String accountId, @RequestBody UpdateAccountRequest request) {\n        return delegate.updateAccount(accountId, request);\n    }\n\n    @Override\n    @DeleteMapping(\"/api/banking/accounts/{accountId}\")\n    public ResponseEntity<AccountResponse> deleteAccount(@PathVariable String accountId) {\n        return delegate.deleteAccount(accountId);\n    }\n\n    @Override\n    @PostMapping(\"/api/banking/payments\")\n    public ResponseEntity<PaymentResponse> createPayment(@RequestBody PaymentRequest request) {\n        return delegate.createPayment(request);\n    }\n}"}}};
 
+  const treeLabels = { 'patterns': 'patterns', 'banking': 'banking (Delegate real)' };
   let activeFileEl = null;
   let currentFileContent = '';
-  const fileContentCache = {};
+
+  function buildTree(node, path, container, depth){
+    Object.keys(node).forEach(key => {
+      const value = node[key];
+      const fullPath = path ? path + '/' + key : key;
+      if(typeof value === 'string'){
+        const fileEl = document.createElement('div');
+        fileEl.className = 'tree-file';
+        fileEl.style.paddingLeft = (depth * 14 + 26) + 'px';
+        fileEl.textContent = '\ud83d\udcc4 ' + key;
+        fileEl.addEventListener('click', () => selectFile(fullPath, value, fileEl));
+        container.appendChild(fileEl);
+        fileEl.dataset.autopath = fullPath;
+      } else {
+        const folderEl = document.createElement('div');
+        folderEl.className = 'tree-folder';
+        folderEl.style.paddingLeft = (depth * 14) + 'px';
+        const label = depth === 0 ? (treeLabels[key] || key) : key;
+        folderEl.innerHTML = '<span class="tree-caret">\u25be</span> \ud83d\udcc1 ' + label;
+        const childrenEl = document.createElement('div');
+        childrenEl.hidden = depth > 0;
+        folderEl.querySelector('.tree-caret').textContent = childrenEl.hidden ? '\u25b8' : '\u25be';
+        folderEl.addEventListener('click', () => {
+          childrenEl.hidden = !childrenEl.hidden;
+          folderEl.querySelector('.tree-caret').textContent = childrenEl.hidden ? '\u25b8' : '\u25be';
+        });
+        container.appendChild(folderEl);
+        container.appendChild(childrenEl);
+        buildTree(value, fullPath, childrenEl, depth + 1);
+      }
+    });
+  }
 
   function highlightJava(code){
     const tokenRegex = /(\/\/[^\n]*)|("(?:[^"\\]|\\.)*")|(@\w+)|\b(public|private|protected|class|interface|record|enum|extends|implements|static|final|sealed|permits|new|return|void|if|else|switch|case|default|throw|throws|import|package|this|super|synchronized)\b|\b(String|int|double|boolean|long|float|char|byte|short|var)\b/g;
@@ -871,7 +893,8 @@
     let match;
     while((match = tokenRegex.exec(code)) !== null){
       result += escapeHtml(code.slice(lastIndex, match.index));
-      const text = escapeHtml(match[0]);
+      const full = match[0];
+      const text = escapeHtml(full);
       if(match[1]) result += '<span class="tok-c">' + text + '</span>';
       else if(match[2]) result += '<span class="tok-s">' + text + '</span>';
       else if(match[3]) result += '<span class="tok-a">' + text + '</span>';
@@ -883,86 +906,17 @@
     return result;
   }
 
-  function pathToTree(paths, stripPrefix){
-    const root = {};
-    paths.forEach(p => {
-      const rel = p.startsWith(stripPrefix + '/') ? p.slice(stripPrefix.length + 1) : p;
-      const parts = rel.split('/');
-      let node = root;
-      parts.forEach((part, i) => {
-        if(i === parts.length - 1) node[part] = { __file: true, __repoPath: p };
-        else { node[part] = node[part] || {}; node = node[part]; }
-      });
-    });
-    return root;
-  }
-
-  function renderNodes(node, container, depth){
-    Object.keys(node).sort().forEach(key => {
-      const value = node[key];
-      if(value.__file){
-        const fileEl = document.createElement('div');
-        fileEl.className = 'tree-file';
-        fileEl.style.paddingLeft = (depth * 14 + 26) + 'px';
-        fileEl.textContent = '📄 ' + key;
-        fileEl.addEventListener('click', () => selectFile(value.__repoPath, fileEl));
-        container.appendChild(fileEl);
-      } else {
-        const folderEl = document.createElement('div');
-        folderEl.className = 'tree-folder';
-        folderEl.style.paddingLeft = (depth * 14) + 'px';
-        folderEl.innerHTML = '<span class="tree-caret">▸</span> 📁 ' + key;
-        const childrenEl = document.createElement('div');
-        childrenEl.hidden = true;
-        folderEl.addEventListener('click', () => {
-          childrenEl.hidden = !childrenEl.hidden;
-          folderEl.querySelector('.tree-caret').textContent = childrenEl.hidden ? '▸' : '▾';
-        });
-        container.appendChild(folderEl);
-        container.appendChild(childrenEl);
-        renderNodes(value, childrenEl, depth + 1);
-      }
-    });
-  }
-
-  function makeRootFolder(label, expanded){
-    const folderEl = document.createElement('div');
-    folderEl.className = 'tree-folder';
-    folderEl.innerHTML = '<span class="tree-caret">' + (expanded ? '▾' : '▸') + '</span> 📁 ' + label;
-    const childrenEl = document.createElement('div');
-    childrenEl.hidden = !expanded;
-    folderEl.addEventListener('click', () => {
-      childrenEl.hidden = !childrenEl.hidden;
-      folderEl.querySelector('.tree-caret').textContent = childrenEl.hidden ? '▸' : '▾';
-    });
-    return { folderEl, childrenEl };
-  }
-
-  async function selectFile(repoPath, el){
+  function selectFile(path, content, el){
     if(activeFileEl) activeFileEl.classList.remove('active');
     el.classList.add('active');
     activeFileEl = el;
-    const shortPath = repoPath.replace('src/main/java/com/javiercerro/portfolio/', '');
-    document.getElementById('code-path').textContent = shortPath;
-    const codeEl = document.getElementById('code-content');
-    codeEl.innerHTML = '<span class="mono-small">Cargando desde GitHub…</span>';
-    try{
-      if(!fileContentCache[repoPath]){
-        const url = 'https://raw.githubusercontent.com/' + GITHUB_REPO + '/' + GITHUB_BRANCH + '/' + repoPath;
-        const res = await fetch(url);
-        if(!res.ok) throw new Error('HTTP ' + res.status);
-        fileContentCache[repoPath] = await res.text();
-      }
-      currentFileContent = fileContentCache[repoPath];
-      codeEl.innerHTML = highlightJava(currentFileContent);
-    }catch(err){
-      codeEl.innerHTML = '<span class="console-error">No se pudo cargar este fichero desde GitHub.<br>' + escapeHtml(err.message) + '</span>';
-    }
+    currentFileContent = content;
+    document.getElementById('code-path').textContent = path;
+    document.getElementById('code-content').innerHTML = highlightJava(content);
   }
 
   function copyCode(){
     const btn = document.getElementById('btn-copy');
-    if(!currentFileContent) return;
     navigator.clipboard.writeText(currentFileContent).then(() => {
       const original = btn.textContent;
       btn.textContent = 'Copiado';
@@ -970,61 +924,12 @@
     });
   }
 
-  async function loadPatternsExplorer(){
-    const treePanel = document.getElementById('tree-panel');
-    if(!treePanel) return;
-    document.getElementById('code-content').innerHTML = '';
-    document.getElementById('code-path').textContent = 'patterns';
-
-    if(location.protocol === 'file:'){
-      treePanel.innerHTML =
-        '<div style="padding:16px;" class="console-error">Estás abriendo este archivo con doble clic (protocolo file://). Por seguridad, los navegadores bloquean ahí las peticiones a GitHub.' +
-        '<br><br>Sírvelo con un servidor local, por ejemplo:<br><code>npx http-server -p 4200</code><br>o ábrelo ya en tu web publicada — ahí funciona sin hacer nada más.' +
-        '<br><br><a href="https://github.com/' + GITHUB_REPO + '/tree/' + GITHUB_BRANCH + '/' + PATTERNS_BASE + '" target="_blank" rel="noopener" style="color:var(--accent-2)">Mientras tanto, ver patterns/ directamente en GitHub →</a>' +
-        '</div>';
-      return;
-    }
-
-    treePanel.innerHTML = '<div style="padding:14px;" class="mono-small">Cargando árbol desde GitHub…</div>';
-    try{
-      const treeUrl = 'https://api.github.com/repos/' + GITHUB_REPO + '/git/trees/' + GITHUB_BRANCH + '?recursive=1';
-      const res = await fetch(treeUrl);
-      const data = await res.json();
-      if(!res.ok) throw new Error(data.message || ('HTTP ' + res.status));
-
-      const patternPaths = data.tree.filter(i => i.type === 'blob' && i.path.startsWith(PATTERNS_BASE + '/')).map(i => i.path);
-      if(patternPaths.length === 0) throw new Error('No se encontró ningún fichero en ' + PATTERNS_BASE);
-
-      treePanel.innerHTML = '';
-
-      const patternsSubtree = pathToTree(patternPaths, PATTERNS_BASE);
-      const { folderEl: pFolder, childrenEl: pChildren } = makeRootFolder('patterns', true);
-      treePanel.appendChild(pFolder);
-      treePanel.appendChild(pChildren);
-      renderNodes(patternsSubtree, pChildren, 1);
-
-      const delegateSubtree = pathToTree(DELEGATE_FILES, 'src/main/java/com/javiercerro/portfolio/banking');
-      const { folderEl: dFolder, childrenEl: dChildren } = makeRootFolder('banking (Delegate real)', false);
-      treePanel.appendChild(dFolder);
-      treePanel.appendChild(dChildren);
-      renderNodes(delegateSubtree, dChildren, 1);
-
-      const firstFile = treePanel.querySelector('.tree-file');
-      if(firstFile) firstFile.click();
-    }catch(err){
-      const isRateLimit = /rate limit/i.test(err.message);
-      const msg = isRateLimit
-        ? 'GitHub ha limitado temporalmente las peticiones sin identificar desde esta red. Prueba de nuevo en unos minutos.'
-        : 'No se pudo conectar con GitHub. Comprueba tu conexión, o si usas un bloqueador de anuncios/privacidad, prueba desactivándolo para este sitio.';
-      treePanel.innerHTML =
-        '<div style="padding:16px;" class="console-error">' + msg +
-        '<br><br><a href="https://github.com/' + GITHUB_REPO + '/tree/' + GITHUB_BRANCH + '/' + PATTERNS_BASE + '" target="_blank" rel="noopener" style="color:var(--accent-2)">Ver patterns/ directamente en GitHub →</a>' +
-        '<br><br><button class="code-copy-btn" onclick="loadPatternsExplorer()">Reintentar</button>' +
-        '</div>';
-    }
+  const treePanel = document.getElementById('tree-panel');
+  if(treePanel){
+    buildTree(patternsTree, '', treePanel, 0);
+    const firstFile = treePanel.querySelector('.tree-file');
+    if(firstFile) firstFile.click();
   }
-
-  loadPatternsExplorer();
 </script>
 </body>
 </html>
