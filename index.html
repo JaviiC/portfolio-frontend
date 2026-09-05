@@ -85,7 +85,7 @@
   }
   .terminal-bar{display:flex; align-items:center; gap:8px; padding:10px 14px; background:var(--bg-elevated-2); border-bottom:1px solid var(--border);}
   .terminal-dot{width:10px; height:10px; border-radius:50%;}
-  .terminal-body{font-family:var(--font-mono); font-size:13px; padding:18px; min-height:220px; white-space:pre-wrap; word-break:break-word;}
+  .terminal-body{font-family:var(--font-mono); font-size:13px; padding:18px; height:230px; overflow-y:auto; white-space:pre-wrap; word-break:break-word;}
   .term-prompt{color:var(--accent-2);}
   .term-cmd{color:var(--ink);}
   .term-res{color:var(--muted); display:block; margin-top:10px;}
@@ -239,6 +239,7 @@
     .status-right .status-clock{display:none;}
     .code-explorer{grid-template-columns:1fr;}
     .tree-panel{max-height:220px; border-right:none; border-bottom:1px solid var(--border);}
+    .terminal-body{height:280px;}
   }
   @media (prefers-reduced-motion: reduce){
     .logo .blink{animation:none;}
@@ -570,12 +571,17 @@
   ];
   const cmdEl = document.getElementById('term-cmd');
   const resEl = document.getElementById('term-res');
+  const terminalBodyEl = document.querySelector('.terminal-body');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function typeText(el, text, done){
     el.textContent = ''; let i = 0;
     (function step(){
-      if(i <= text.length){ el.textContent = text.slice(0,i); i++; setTimeout(step, 16); }
+      if(i <= text.length){
+        el.textContent = text.slice(0,i); i++;
+        if(terminalBodyEl) terminalBodyEl.scrollTop = terminalBodyEl.scrollHeight;
+        setTimeout(step, 16);
+      }
       else { done(); }
     })();
   }
